@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Article: Decodable {
+struct Article: Decodable, Hashable {
     let id: Int?
     let title, description: String?
     let path: String?
@@ -40,7 +40,7 @@ struct Article: Decodable {
 
 
 
-struct User: Decodable {
+struct User: Decodable, Hashable {
     let name, username, twitterUsername, githubUsername: String?
     let userID: Int?
     let profileImage, profileImage90: String?

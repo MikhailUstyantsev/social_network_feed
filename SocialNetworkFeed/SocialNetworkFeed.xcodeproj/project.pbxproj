@@ -17,6 +17,8 @@
 		835720762D78BDF600F08BAE /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 835720752D78BDF600F08BAE /* Alamofire */; };
 		835720792D78C45E00F08BAE /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835720782D78C45E00F08BAE /* HomeViewModel.swift */; };
 		8357207C2D78C5E100F08BAE /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357207B2D78C5E100F08BAE /* Endpoint.swift */; };
+		8357207F2D7A216700F08BAE /* ArticleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357207E2D7A216700F08BAE /* ArticleTableViewCell.swift */; };
+		835720812D7A293300F08BAE /* ErrorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835720802D7A293300F08BAE /* ErrorPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,8 @@
 		835720722D78BD3E00F08BAE /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		835720782D78C45E00F08BAE /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		8357207B2D78C5E100F08BAE /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		8357207E2D7A216700F08BAE /* ArticleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleTableViewCell.swift; sourceTree = "<group>"; };
+		835720802D7A293300F08BAE /* ErrorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,12 +68,12 @@
 		835720642D78B69F00F08BAE /* SocialNetworkFeed */ = {
 			isa = PBXGroup;
 			children = (
+				8357206C2D78B81500F08BAE /* App */,
 				8357207A2D78C5AF00F08BAE /* Utilities */,
 				835720712D78BCE100F08BAE /* Managers */,
 				8357206E2D78B9F700F08BAE /* Models */,
-				8357206C2D78B81500F08BAE /* App */,
-				8357206D2D78B88800F08BAE /* SupportingFiles */,
 				835720772D78C44500F08BAE /* HomeModule */,
+				8357206D2D78B88800F08BAE /* SupportingFiles */,
 			);
 			path = SocialNetworkFeed;
 			sourceTree = "<group>";
@@ -112,6 +116,7 @@
 		835720772D78C44500F08BAE /* HomeModule */ = {
 			isa = PBXGroup;
 			children = (
+				8357207D2D7A211500F08BAE /* Cells */,
 				835720782D78C45E00F08BAE /* HomeViewModel.swift */,
 				835720632D78B69F00F08BAE /* HomeViewController.swift */,
 			);
@@ -122,8 +127,17 @@
 			isa = PBXGroup;
 			children = (
 				8357207B2D78C5E100F08BAE /* Endpoint.swift */,
+				835720802D7A293300F08BAE /* ErrorPresenter.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		8357207D2D7A211500F08BAE /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				8357207E2D7A216700F08BAE /* ArticleTableViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -205,8 +219,10 @@
 			files = (
 				8357207C2D78C5E100F08BAE /* Endpoint.swift in Sources */,
 				835720702D78BA1000F08BAE /* Article.swift in Sources */,
+				835720812D7A293300F08BAE /* ErrorPresenter.swift in Sources */,
 				835720792D78C45E00F08BAE /* HomeViewModel.swift in Sources */,
 				835720652D78B69F00F08BAE /* AppDelegate.swift in Sources */,
+				8357207F2D7A216700F08BAE /* ArticleTableViewCell.swift in Sources */,
 				835720732D78BD3E00F08BAE /* NetworkManager.swift in Sources */,
 				835720662D78B69F00F08BAE /* SceneDelegate.swift in Sources */,
 				835720672D78B69F00F08BAE /* HomeViewController.swift in Sources */,

@@ -15,12 +15,15 @@ final class NetworkManager {
     private init() {}
     
     
-    func retrieveArticles(from url: URL) -> [Article] {
-        print(url)
-        let urlString = url.absoluteString
-        AF.request(urlString, method: .get).responseDecodable(of: [Article].self) { response in
-            print(response.value)
+    func retrieveArticles(from url: URL, completion: @escaping (Result<[Article], AFError>) -> (Void)) {
+        AF.request(url, method: .get)
+            .validate()
+            .responseDecodable(of: [Article].self) { response in
+                if let error = response.error {
+                    completion(.failure(error))
+                    return
+                }
+                completion(.success(response.value ?? []))
         }
-        return []
     }
 }
