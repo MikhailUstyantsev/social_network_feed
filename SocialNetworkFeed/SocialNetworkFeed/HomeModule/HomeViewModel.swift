@@ -26,4 +26,8 @@ final class HomeViewModel {
         }
     }
     
+    func clearArticles() {
+        articlesPublisher.send([])
+    }
+    
 }

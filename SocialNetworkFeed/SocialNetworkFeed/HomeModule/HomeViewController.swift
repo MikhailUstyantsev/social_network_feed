@@ -22,6 +22,7 @@ class HomeViewController: UIViewController {
     private var viewModel: HomeViewModel
     private var cancellables = Set<AnyCancellable>()
     private lazy var tableViewDataSource = makeDataSource()
+    private let refreshControl = UIRefreshControl()
     
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
@@ -60,6 +61,9 @@ class HomeViewController: UIViewController {
                 } receiveValue: { [weak self] articles in
                     guard let self else { return }
                     self.applySnapshot(with: articles)
+                    DispatchQueue.main.async {
+                        self.tableView.refreshControl?.endRefreshing()
+                    }
                 }
                 .store(in: &cancellables)
         }
@@ -70,6 +74,11 @@ class HomeViewController: UIViewController {
         tableView.backgroundColor = .clear
         tableView.delegate = self
         
+       
+       
+        tableView.refreshControl = refreshControl
+        tableView.refreshControl?.addTarget(self, action: #selector(refreshArticles), for: .valueChanged)
+        
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -79,6 +88,11 @@ class HomeViewController: UIViewController {
         ])
     }
     
+    
+    @objc private func refreshArticles() {
+        viewModel.clearArticles()
+        viewModel.getArticles(page: 1)
+    }
     
     // MARK: - DataSource methods
     private func makeDataSource() -> DataSource {

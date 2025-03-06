@@ -36,7 +36,6 @@ class ArticleTableViewCell: UITableViewCell {
         return label
     }()
     
-    // Article title label
     private let articleTitleLabel: UILabel = {
         let label = UILabel()
         label.font = R.Font.montserratSemiBold(with: 18)
@@ -86,6 +85,7 @@ class ArticleTableViewCell: UITableViewCell {
         contentView.addSubview(reactionsStackView)
         
         NSLayoutConstraint.activate([
+            // Avatar Image View
             avatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             avatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             avatarImageView.widthAnchor.constraint(equalToConstant: 60),
@@ -132,7 +132,7 @@ class ArticleTableViewCell: UITableViewCell {
         // Set article title
         articleTitleLabel.text = article.title
         
-        // Configure each reaction view with its image and count value
+        // Configure each reaction view 
         positiveReactionView.configure(withImageName: "positive", value: article.positiveReactionsCount ?? 0)
         commentReactionView.configure(withImageName: "comments", value: article.commentsCount ?? 0)
         publicReactionView.configure(withImageName: "public_reactions", value: article.publicReactionsCount ?? 0)
