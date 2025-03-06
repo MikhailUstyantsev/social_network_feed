@@ -15,7 +15,7 @@ struct Endpoint {
 
 extension Endpoint {
     
-    static func publishedArticles(page: Int = 1, perPage: Int = 10) -> Endpoint {
+    static func publishedArticles(page: Int = 1, perPage: Int = 30) -> Endpoint {
         return Endpoint(
             path: "/api/articles",
             queryItems: [

@@ -42,7 +42,7 @@ class HomeViewController: UIViewController {
 
     private func configureViewController() {
         view.backgroundColor = .systemBackground
-        title = "DEV feed"
+        title = R.String.homeVCtitle
         navigationController?.navigationBar.prefersLargeTitles = true
         configureTableView()
         bind()
@@ -68,6 +68,7 @@ class HomeViewController: UIViewController {
         tableView.register(ArticleTableViewCell.self, forCellReuseIdentifier: String(describing: ArticleTableViewCell.self))
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .clear
+        tableView.delegate = self
         
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
@@ -104,3 +105,9 @@ class HomeViewController: UIViewController {
     }
 }
 
+
+extension HomeViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
