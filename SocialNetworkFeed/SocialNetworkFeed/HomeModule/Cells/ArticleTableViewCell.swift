@@ -10,6 +10,9 @@ import Alamofire
 
 class ArticleTableViewCell: UITableViewCell {
     
+    var isFavorite: Bool = false
+    var onBookmarkTapped: (() -> Void)?
+    
     // MARK: - UI Elements
     
     private let avatarImageView: UIImageView = {
@@ -17,7 +20,7 @@ class ArticleTableViewCell: UITableViewCell {
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.layer.cornerRadius = 30
+        iv.layer.cornerRadius = 30 
         return iv
     }()
     
@@ -48,18 +51,38 @@ class ArticleTableViewCell: UITableViewCell {
     private let commentReactionView = ReactionView()
     private let publicReactionView = ReactionView()
     
+    // Bookmark button
+    private let bookmarkButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "bookmark"), for: .normal)
+        button.tintColor = .systemBlue
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    // Stack view for user info (username & GitHub username)
     private lazy var userInfoStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [usernameLabel, githubUsernameLabel])
         stack.axis = .vertical
         stack.spacing = 4
         stack.alignment = .leading
+        return stack
+    }()
+    
+    // Container stack view for header: user info and bookmark button.
+    private lazy var headerStackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [userInfoStackView, bookmarkButton])
+        stack.spacing = 8
+        stack.alignment = .center
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
     
+    // Stack view for reaction views
     private lazy var reactionsStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [positiveReactionView, commentReactionView, publicReactionView])
         stack.distribution = .fillEqually
+        stack.spacing = 16
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -80,9 +103,12 @@ class ArticleTableViewCell: UITableViewCell {
     
     private func setupCellUI() {
         contentView.addSubview(avatarImageView)
-        contentView.addSubview(userInfoStackView)
+        contentView.addSubview(headerStackView)
         contentView.addSubview(articleTitleLabel)
         contentView.addSubview(reactionsStackView)
+        
+        // Add target for bookmark action
+        bookmarkButton.addTarget(self, action: #selector(bookmarkButtonTapped), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
             // Avatar Image View
@@ -91,10 +117,14 @@ class ArticleTableViewCell: UITableViewCell {
             avatarImageView.widthAnchor.constraint(equalToConstant: 60),
             avatarImageView.heightAnchor.constraint(equalToConstant: 60),
             
-            // User Info Stack View
-            userInfoStackView.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 12),
-            userInfoStackView.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor),
-            userInfoStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            // Header Stack View (user info and bookmark)
+            headerStackView.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 12),
+            headerStackView.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor),
+            headerStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            
+            // Constrain bookmark button (optional)
+            bookmarkButton.widthAnchor.constraint(equalToConstant: 24),
+            bookmarkButton.heightAnchor.constraint(equalToConstant: 24),
             
             // Article Title Label
             articleTitleLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 12),
@@ -107,6 +137,18 @@ class ArticleTableViewCell: UITableViewCell {
             reactionsStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             reactionsStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12)
         ])
+    }
+    
+    // MARK: - Actions
+    
+    @objc private func bookmarkButtonTapped() {
+        isFavorite = !isFavorite
+        setupBookmarkButtonImage()
+        onBookmarkTapped?()
+    }
+    
+    private func setupBookmarkButtonImage() {
+        bookmarkButton.setImage(isFavorite ? UIImage(named: "bookmark.filled") : UIImage(named: "bookmark"), for: .normal)
     }
     
     // MARK: - Configuration
@@ -125,6 +167,8 @@ class ArticleTableViewCell: UITableViewCell {
             avatarImageView.image = UIImage(named: "placeholder")
         }
         
+        setupBookmarkButtonImage()
+        
         // Set user info labels
         usernameLabel.text = article.user?.name
         githubUsernameLabel.text = "GitHub: \(article.user?.githubUsername ?? "not set")"
@@ -132,7 +176,7 @@ class ArticleTableViewCell: UITableViewCell {
         // Set article title
         articleTitleLabel.text = article.title
         
-        // Configure each reaction view 
+        // Configure each reaction view
         positiveReactionView.configure(withImageName: "positive", value: article.positiveReactionsCount ?? 0)
         commentReactionView.configure(withImageName: "comments", value: article.commentsCount ?? 0)
         publicReactionView.configure(withImageName: "public_reactions", value: article.publicReactionsCount ?? 0)

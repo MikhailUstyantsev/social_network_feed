@@ -62,7 +62,9 @@ class HomeViewController: UIViewController {
                     guard let self else { return }
                     self.applySnapshot(with: articles)
                     DispatchQueue.main.async {
-                        self.tableView.refreshControl?.endRefreshing()
+                        if self.tableView.refreshControl?.isRefreshing == true {
+                            self.tableView.refreshControl?.endRefreshing()
+                        }
                     }
                 }
                 .store(in: &cancellables)
@@ -105,6 +107,9 @@ class HomeViewController: UIViewController {
                     withIdentifier: String(describing: ArticleTableViewCell.self),
                     for: indexPath) as? ArticleTableViewCell
                 cell?.configure(with: item)
+                cell?.onBookmarkTapped = { [weak self] in
+                    print("Bookmark tapped for \(item.title)")
+                }
                 return cell
             })
         return dataSource
