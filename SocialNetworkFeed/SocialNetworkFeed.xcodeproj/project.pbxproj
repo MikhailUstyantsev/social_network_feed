@@ -39,6 +39,12 @@
 		835720A92D7A395200F08BAE /* Montserrat-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 835720942D7A395200F08BAE /* Montserrat-SemiBoldItalic.ttf */; };
 		835720AA2D7A395200F08BAE /* Montserrat-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8357208D2D7A395200F08BAE /* Montserrat-Italic.ttf */; };
 		835720AC2D7A397900F08BAE /* Resouces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835720AB2D7A397900F08BAE /* Resouces.swift */; };
+		835720AF2D7B639B00F08BAE /* NetworkFeedModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 835720AD2D7B639B00F08BAE /* NetworkFeedModel.xcdatamodeld */; };
+		835720B62D7B692A00F08BAE /* BookmarkedArticle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835720B22D7B692A00F08BAE /* BookmarkedArticle+CoreDataClass.swift */; };
+		835720B72D7B692A00F08BAE /* BookmarkedArticle+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835720B32D7B692A00F08BAE /* BookmarkedArticle+CoreDataProperties.swift */; };
+		835720B82D7B692A00F08BAE /* BookmarkedUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835720B42D7B692A00F08BAE /* BookmarkedUser+CoreDataClass.swift */; };
+		835720B92D7B692A00F08BAE /* BookmarkedUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835720B52D7B692A00F08BAE /* BookmarkedUser+CoreDataProperties.swift */; };
+		835720BE2D7B6CE000F08BAE /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835720BD2D7B6CE000F08BAE /* StorageManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +81,12 @@
 		835720952D7A395200F08BAE /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Thin.ttf"; sourceTree = "<group>"; };
 		835720962D7A395200F08BAE /* Montserrat-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ThinItalic.ttf"; sourceTree = "<group>"; };
 		835720AB2D7A397900F08BAE /* Resouces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resouces.swift; sourceTree = "<group>"; };
+		835720AE2D7B639B00F08BAE /* NetworkFeedModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NetworkFeedModel.xcdatamodel; sourceTree = "<group>"; };
+		835720B22D7B692A00F08BAE /* BookmarkedArticle+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookmarkedArticle+CoreDataClass.swift"; sourceTree = "<group>"; };
+		835720B32D7B692A00F08BAE /* BookmarkedArticle+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookmarkedArticle+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		835720B42D7B692A00F08BAE /* BookmarkedUser+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookmarkedUser+CoreDataClass.swift"; sourceTree = "<group>"; };
+		835720B52D7B692A00F08BAE /* BookmarkedUser+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookmarkedUser+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		835720BD2D7B6CE000F08BAE /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,12 +120,14 @@
 		835720642D78B69F00F08BAE /* SocialNetworkFeed */ = {
 			isa = PBXGroup;
 			children = (
+				835720BA2D7B6AA900F08BAE /* Extensions */,
 				8357206C2D78B81500F08BAE /* App */,
 				8357207A2D78C5AF00F08BAE /* Utilities */,
 				835720712D78BCE100F08BAE /* Managers */,
 				8357206E2D78B9F700F08BAE /* Models */,
 				835720772D78C44500F08BAE /* HomeModule */,
 				8357206D2D78B88800F08BAE /* SupportingFiles */,
+				835720B02D7B63A600F08BAE /* Persistence Storage */,
 			);
 			path = SocialNetworkFeed;
 			sourceTree = "<group>";
@@ -151,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				835720722D78BD3E00F08BAE /* NetworkManager.swift */,
+				835720BD2D7B6CE000F08BAE /* StorageManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -222,6 +237,33 @@
 				835720972D7A395200F08BAE /* Montserrat */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		835720B02D7B63A600F08BAE /* Persistence Storage */ = {
+			isa = PBXGroup;
+			children = (
+				835720B12D7B68DB00F08BAE /* NSManagedObject */,
+				835720AD2D7B639B00F08BAE /* NetworkFeedModel.xcdatamodeld */,
+			);
+			path = "Persistence Storage";
+			sourceTree = "<group>";
+		};
+		835720B12D7B68DB00F08BAE /* NSManagedObject */ = {
+			isa = PBXGroup;
+			children = (
+				835720B22D7B692A00F08BAE /* BookmarkedArticle+CoreDataClass.swift */,
+				835720B32D7B692A00F08BAE /* BookmarkedArticle+CoreDataProperties.swift */,
+				835720B42D7B692A00F08BAE /* BookmarkedUser+CoreDataClass.swift */,
+				835720B52D7B692A00F08BAE /* BookmarkedUser+CoreDataProperties.swift */,
+			);
+			path = NSManagedObject;
+			sourceTree = "<group>";
+		};
+		835720BA2D7B6AA900F08BAE /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -319,14 +361,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				835720BE2D7B6CE000F08BAE /* StorageManager.swift in Sources */,
 				8357207C2D78C5E100F08BAE /* Endpoint.swift in Sources */,
 				835720702D78BA1000F08BAE /* Article.swift in Sources */,
 				835720812D7A293300F08BAE /* ErrorPresenter.swift in Sources */,
 				835720792D78C45E00F08BAE /* HomeViewModel.swift in Sources */,
 				835720652D78B69F00F08BAE /* AppDelegate.swift in Sources */,
+				835720B62D7B692A00F08BAE /* BookmarkedArticle+CoreDataClass.swift in Sources */,
+				835720B72D7B692A00F08BAE /* BookmarkedArticle+CoreDataProperties.swift in Sources */,
+				835720B82D7B692A00F08BAE /* BookmarkedUser+CoreDataClass.swift in Sources */,
+				835720B92D7B692A00F08BAE /* BookmarkedUser+CoreDataProperties.swift in Sources */,
 				8357207F2D7A216700F08BAE /* ArticleTableViewCell.swift in Sources */,
 				835720AC2D7A397900F08BAE /* Resouces.swift in Sources */,
 				835720732D78BD3E00F08BAE /* NetworkManager.swift in Sources */,
+				835720AF2D7B639B00F08BAE /* NetworkFeedModel.xcdatamodeld in Sources */,
 				835720662D78B69F00F08BAE /* SceneDelegate.swift in Sources */,
 				835720672D78B69F00F08BAE /* HomeViewController.swift in Sources */,
 				835720842D7A380800F08BAE /* ReactionView.swift in Sources */,
@@ -571,6 +619,19 @@
 			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		835720AD2D7B639B00F08BAE /* NetworkFeedModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				835720AE2D7B639B00F08BAE /* NetworkFeedModel.xcdatamodel */,
+			);
+			currentVersion = 835720AE2D7B639B00F08BAE /* NetworkFeedModel.xcdatamodel */;
+			path = NetworkFeedModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 8357203B2D78B69300F08BAE /* Project object */;
 }

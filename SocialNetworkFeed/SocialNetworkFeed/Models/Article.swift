@@ -21,6 +21,7 @@ struct Article: Decodable, Hashable {
     let tagList: [String]?
     let tags: String?
     let user: User?
+    var isBookmarked: Bool = false
     
     enum CodingKeys: String, CodingKey {
         case id, title, description

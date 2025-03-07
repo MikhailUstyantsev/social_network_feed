@@ -42,7 +42,7 @@ class HomeViewController: UIViewController {
     }
 
     private func configureViewController() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .secondarySystemBackground
         title = R.String.homeVCtitle
         navigationController?.navigationBar.prefersLargeTitles = true
         configureTableView()
@@ -60,8 +60,8 @@ class HomeViewController: UIViewController {
                     }
                 } receiveValue: { [weak self] articles in
                     guard let self else { return }
-                    self.applySnapshot(with: articles)
                     DispatchQueue.main.async {
+                        self.applySnapshot(with: articles)
                         if self.tableView.refreshControl?.isRefreshing == true {
                             self.tableView.refreshControl?.endRefreshing()
                         }
@@ -108,7 +108,8 @@ class HomeViewController: UIViewController {
                     for: indexPath) as? ArticleTableViewCell
                 cell?.configure(with: item)
                 cell?.onBookmarkTapped = { [weak self] in
-                    print("Bookmark tapped for \(item.title)")
+                    guard let self else { return }
+                    self.viewModel.toggleBookmark(for: item)
                 }
                 return cell
             })
@@ -116,7 +117,7 @@ class HomeViewController: UIViewController {
     }
     
     
-    private func applySnapshot(with items: [Article], animatingDifferences: Bool = true) {
+    private func applySnapshot(with items: [Article], animatingDifferences: Bool = false) {
         var snapshot = Snapshot()
         snapshot.appendSections([.main])
         snapshot.appendItems(items)

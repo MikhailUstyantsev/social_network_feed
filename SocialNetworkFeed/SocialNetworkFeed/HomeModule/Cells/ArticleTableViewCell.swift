@@ -10,7 +10,6 @@ import Alamofire
 
 class ArticleTableViewCell: UITableViewCell {
     
-    var isFavorite: Bool = false
     var onBookmarkTapped: (() -> Void)?
     
     // MARK: - UI Elements
@@ -107,6 +106,7 @@ class ArticleTableViewCell: UITableViewCell {
         contentView.addSubview(articleTitleLabel)
         contentView.addSubview(reactionsStackView)
         
+        contentView.backgroundColor = .secondarySystemBackground
         // Add target for bookmark action
         bookmarkButton.addTarget(self, action: #selector(bookmarkButtonTapped), for: .touchUpInside)
         
@@ -142,18 +142,11 @@ class ArticleTableViewCell: UITableViewCell {
     // MARK: - Actions
     
     @objc private func bookmarkButtonTapped() {
-        isFavorite = !isFavorite
-        setupBookmarkButtonImage()
         onBookmarkTapped?()
-    }
-    
-    private func setupBookmarkButtonImage() {
-        bookmarkButton.setImage(isFavorite ? UIImage(named: "bookmark.filled") : UIImage(named: "bookmark"), for: .normal)
     }
     
     // MARK: - Configuration
     
-    /// Configures the cell with an Article model.
     func configure(with article: Article) {
         // Load avatar image using Alamofire
         if let imageUrlString = article.user?.profileImage90,
@@ -167,7 +160,7 @@ class ArticleTableViewCell: UITableViewCell {
             avatarImageView.image = UIImage(named: "placeholder")
         }
         
-        setupBookmarkButtonImage()
+        bookmarkButton.setImage(article.isBookmarked ? UIImage(named: "bookmark.filled") : UIImage(named: "bookmark"), for: .normal)
         
         // Set user info labels
         usernameLabel.text = article.user?.name
