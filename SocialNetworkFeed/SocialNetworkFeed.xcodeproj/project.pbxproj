@@ -45,6 +45,7 @@
 		835720B82D7B692A00F08BAE /* BookmarkedUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835720B42D7B692A00F08BAE /* BookmarkedUser+CoreDataClass.swift */; };
 		835720B92D7B692A00F08BAE /* BookmarkedUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835720B52D7B692A00F08BAE /* BookmarkedUser+CoreDataProperties.swift */; };
 		835720BE2D7B6CE000F08BAE /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835720BD2D7B6CE000F08BAE /* StorageManager.swift */; };
+		835720C12D7B7B5F00F08BAE /* BookmarkedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835720C02D7B7B5F00F08BAE /* BookmarkedViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,6 +88,7 @@
 		835720B42D7B692A00F08BAE /* BookmarkedUser+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookmarkedUser+CoreDataClass.swift"; sourceTree = "<group>"; };
 		835720B52D7B692A00F08BAE /* BookmarkedUser+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookmarkedUser+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		835720BD2D7B6CE000F08BAE /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		835720C02D7B7B5F00F08BAE /* BookmarkedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkedViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 				835720712D78BCE100F08BAE /* Managers */,
 				8357206E2D78B9F700F08BAE /* Models */,
 				835720772D78C44500F08BAE /* HomeModule */,
+				835720BF2D7B7B1B00F08BAE /* BookmarkedModule */,
 				8357206D2D78B88800F08BAE /* SupportingFiles */,
 				835720B02D7B63A600F08BAE /* Persistence Storage */,
 			);
@@ -266,6 +269,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		835720BF2D7B7B1B00F08BAE /* BookmarkedModule */ = {
+			isa = PBXGroup;
+			children = (
+				835720C02D7B7B5F00F08BAE /* BookmarkedViewController.swift */,
+			);
+			path = BookmarkedModule;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -374,6 +385,7 @@
 				8357207F2D7A216700F08BAE /* ArticleTableViewCell.swift in Sources */,
 				835720AC2D7A397900F08BAE /* Resouces.swift in Sources */,
 				835720732D78BD3E00F08BAE /* NetworkManager.swift in Sources */,
+				835720C12D7B7B5F00F08BAE /* BookmarkedViewController.swift in Sources */,
 				835720AF2D7B639B00F08BAE /* NetworkFeedModel.xcdatamodeld in Sources */,
 				835720662D78B69F00F08BAE /* SceneDelegate.swift in Sources */,
 				835720672D78B69F00F08BAE /* HomeViewController.swift in Sources */,

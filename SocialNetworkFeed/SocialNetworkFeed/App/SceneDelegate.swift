@@ -18,9 +18,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
+        
         let storageManager = StorageManager()
         let viewModel = HomeViewModel(storageManager: storageManager)
-        window?.rootViewController = UINavigationController(rootViewController: HomeViewController(viewModel: viewModel))
+        let homeVC = UINavigationController(rootViewController: HomeViewController(viewModel: viewModel))
+        
+        let bookmarkedVC = UINavigationController(rootViewController: BookmarkedViewController())
+        
+        homeVC.tabBarItem = UITabBarItem(title: "Home",
+                                       image: UIImage(systemName: "list.dash.header.rectangle"),
+                                       tag: 1)
+        bookmarkedVC.tabBarItem = UITabBarItem(title: "Bookmarked",
+                                       image: UIImage(systemName: "bookmark.fill"),
+                                       tag: 2)
+        
+        let rootVC = UITabBarController()
+        rootVC.setViewControllers([homeVC, bookmarkedVC], animated: false)
+        
+        window?.rootViewController = rootVC
         window?.makeKeyAndVisible()
     }
 

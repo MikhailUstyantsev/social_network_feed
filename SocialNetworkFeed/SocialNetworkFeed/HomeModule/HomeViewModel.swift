@@ -12,7 +12,9 @@ import Alamofire
 final class HomeViewModel {
     
     private let storageManager: StorageManager
-    
+    private var currentPage: Int = 1
+    private var isLoading: Bool = false
+    private var hasMoreArticles: Bool = true
     init(storageManager: StorageManager ) {
         self.storageManager = storageManager
     }
@@ -22,9 +24,12 @@ final class HomeViewModel {
     private var articles: [Article] = []
     
     func getArticles(page: Int) {
-        guard let url = Endpoint.publishedArticles(page: page).url else { return }
+        guard !isLoading, hasMoreArticles, let url = Endpoint.publishedArticles(page: page).url else { return }
+        
+        isLoading = true
         NetworkManager.shared.retrieveArticles(from: url) { [weak self] result in
             guard let self else { return }
+            self.isLoading = false
             switch result {
             case .success(let fetchedArticles):
                 // Update each article's bookmark state
@@ -33,16 +38,36 @@ final class HomeViewModel {
                     mutableArticle.isBookmarked = self.storageManager.isBookmarked(articleID: article.id ?? 0)
                     return mutableArticle
                 }
-                self.articles = updatedArticles
-                self.articlesPublisher.send(updatedArticles)
+                
+                if page == 1 {
+                    self.articles = updatedArticles
+                } else {
+                    self.articles.append(contentsOf: updatedArticles)
+                }
+                
+                if updatedArticles.isEmpty {
+                    self.hasMoreArticles = false
+                } else {
+                    self.currentPage = page
+                }
+                
+                self.articlesPublisher.send(self.articles)
             case .failure(let error):
                 self.articlesPublisher.send(completion: .failure(error))
             }
         }
     }
     
+    func loadNextPage() {
+        if !isLoading && hasMoreArticles {
+            getArticles(page: currentPage + 1)
+        }
+    }
+    
     func clearArticles() {
         articles = []
+        currentPage = 1
+        hasMoreArticles = true
         articlesPublisher.send([])
     }
     

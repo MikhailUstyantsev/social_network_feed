@@ -10,7 +10,7 @@ import Combine
 import Alamofire
 
 class HomeViewController: UIViewController {
-
+    
     enum Section {
         case main
     }
@@ -40,7 +40,7 @@ class HomeViewController: UIViewController {
         configureViewController()
         viewModel.getArticles(page: 1)
     }
-
+    
     private func configureViewController() {
         view.backgroundColor = .secondarySystemBackground
         title = R.String.homeVCtitle
@@ -52,32 +52,32 @@ class HomeViewController: UIViewController {
     private func bind() {
         viewModel.articlesPublisher
             .sink { completion in
-                    switch completion {
-                    case .failure(let error):
-                        ErrorPresenter.showError(message: "Response code: \(error.responseCode ?? -1)", on: self)
-                    case .finished:
-                        break
-                    }
-                } receiveValue: { [weak self] articles in
-                    guard let self else { return }
-                    DispatchQueue.main.async {
-                        self.applySnapshot(with: articles)
-                        if self.tableView.refreshControl?.isRefreshing == true {
-                            self.tableView.refreshControl?.endRefreshing()
-                        }
+                switch completion {
+                case .failure(let error):
+                    ErrorPresenter.showError(message: "Response code: \(error.responseCode ?? -1)", on: self)
+                case .finished:
+                    break
+                }
+            } receiveValue: { [weak self] articles in
+                guard let self else { return }
+                DispatchQueue.main.async {
+                    self.applySnapshot(with: articles)
+                    if self.tableView.refreshControl?.isRefreshing == true {
+                        self.tableView.refreshControl?.endRefreshing()
                     }
                 }
-                .store(in: &cancellables)
-        }
-
+            }
+            .store(in: &cancellables)
+    }
+    
     private func configureTableView() {
         tableView.register(ArticleTableViewCell.self, forCellReuseIdentifier: String(describing: ArticleTableViewCell.self))
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .clear
         tableView.delegate = self
         
-       
-       
+        
+        
         tableView.refreshControl = refreshControl
         tableView.refreshControl?.addTarget(self, action: #selector(refreshArticles), for: .valueChanged)
         
@@ -129,5 +129,15 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
+        
+        if offsetY > contentHeight - height - 50 {
+            viewModel.loadNextPage()
+        }
     }
 }
