@@ -19,23 +19,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        let storageManager = StorageManager()
-        let viewModel = HomeViewModel(storageManager: storageManager)
-        let homeVC = UINavigationController(rootViewController: HomeViewController(viewModel: viewModel))
+        let tabBarVC = TabViewController()
         
-        let bookmarkedVC = UINavigationController(rootViewController: BookmarkedViewController())
-        
-        homeVC.tabBarItem = UITabBarItem(title: "Home",
-                                       image: UIImage(systemName: "list.dash.header.rectangle"),
-                                       tag: 1)
-        bookmarkedVC.tabBarItem = UITabBarItem(title: "Bookmarked",
-                                       image: UIImage(systemName: "bookmark.fill"),
-                                       tag: 2)
-        
-        let rootVC = UITabBarController()
-        rootVC.setViewControllers([homeVC, bookmarkedVC], animated: false)
-        
-        window?.rootViewController = rootVC
+        window?.rootViewController = tabBarVC
         window?.makeKeyAndVisible()
     }
 

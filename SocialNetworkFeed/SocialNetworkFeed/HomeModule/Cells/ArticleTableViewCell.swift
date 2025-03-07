@@ -107,7 +107,7 @@ class ArticleTableViewCell: UITableViewCell {
         contentView.addSubview(reactionsStackView)
         
         contentView.backgroundColor = .secondarySystemBackground
-        // Add target for bookmark action
+        
         bookmarkButton.addTarget(self, action: #selector(bookmarkButtonTapped), for: .touchUpInside)
         
         NSLayoutConstraint.activate([

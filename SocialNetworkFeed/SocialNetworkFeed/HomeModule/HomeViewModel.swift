@@ -15,21 +15,24 @@ final class HomeViewModel {
     private var currentPage: Int = 1
     private var isLoading: Bool = false
     private var hasMoreArticles: Bool = true
+    private var articles: [Article] = []
+    
+    let articlesPublisher = PassthroughSubject<[Article], AFError>()
+    let isLoadingPublisher = CurrentValueSubject<Bool, Never>(false)
+    
     init(storageManager: StorageManager ) {
         self.storageManager = storageManager
     }
-    
-    let articlesPublisher = PassthroughSubject<[Article], AFError>()
-    
-    private var articles: [Article] = []
     
     func getArticles(page: Int) {
         guard !isLoading, hasMoreArticles, let url = Endpoint.publishedArticles(page: page).url else { return }
         
         isLoading = true
+        isLoadingPublisher.send(true)
         NetworkManager.shared.retrieveArticles(from: url) { [weak self] result in
             guard let self else { return }
             self.isLoading = false
+            self.isLoadingPublisher.send(false)
             switch result {
             case .success(let fetchedArticles):
                 // Update each article's bookmark state

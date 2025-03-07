@@ -46,6 +46,7 @@
 		835720B92D7B692A00F08BAE /* BookmarkedUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835720B52D7B692A00F08BAE /* BookmarkedUser+CoreDataProperties.swift */; };
 		835720BE2D7B6CE000F08BAE /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835720BD2D7B6CE000F08BAE /* StorageManager.swift */; };
 		835720C12D7B7B5F00F08BAE /* BookmarkedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835720C02D7B7B5F00F08BAE /* BookmarkedViewController.swift */; };
+		835720C32D7B8AB200F08BAE /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835720C22D7B8AB200F08BAE /* TabViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +90,7 @@
 		835720B52D7B692A00F08BAE /* BookmarkedUser+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookmarkedUser+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		835720BD2D7B6CE000F08BAE /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		835720C02D7B7B5F00F08BAE /* BookmarkedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkedViewController.swift; sourceTree = "<group>"; };
+		835720C22D7B8AB200F08BAE /* TabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +142,7 @@
 			children = (
 				8357205B2D78B69F00F08BAE /* AppDelegate.swift */,
 				835720622D78B69F00F08BAE /* SceneDelegate.swift */,
+				835720C22D7B8AB200F08BAE /* TabViewController.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -390,6 +393,7 @@
 				835720662D78B69F00F08BAE /* SceneDelegate.swift in Sources */,
 				835720672D78B69F00F08BAE /* HomeViewController.swift in Sources */,
 				835720842D7A380800F08BAE /* ReactionView.swift in Sources */,
+				835720C32D7B8AB200F08BAE /* TabViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

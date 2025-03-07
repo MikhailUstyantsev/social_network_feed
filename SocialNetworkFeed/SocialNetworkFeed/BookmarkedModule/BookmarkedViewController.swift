@@ -11,7 +11,13 @@ class BookmarkedViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemYellow
+        configureViewController()
     }
-
+    
+    
+    private func configureViewController() {
+        view.backgroundColor = .secondarySystemBackground
+        title = "Bookmarked"
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
 }
