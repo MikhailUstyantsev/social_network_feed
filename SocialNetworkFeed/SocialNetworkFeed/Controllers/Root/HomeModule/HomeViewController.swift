@@ -23,13 +23,7 @@ class HomeViewController: UIViewController {
     private var cancellables = Set<AnyCancellable>()
     private lazy var tableViewDataSource = makeDataSource()
     private let refreshControl = UIRefreshControl()
-    
-    private let loadingView: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(style: .medium)
-        indicator.hidesWhenStopped = true
-        indicator.translatesAutoresizingMaskIntoConstraints = false
-        return indicator
-    }()
+    private let loadingView = LoadingView()
     
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
@@ -60,9 +54,12 @@ class HomeViewController: UIViewController {
     private func configureLoadingView() {
         view.addSubview(loadingView)
         NSLayoutConstraint.activate([
-            loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            loadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            loadingView.topAnchor.constraint(equalTo: view.topAnchor),
+            loadingView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+        loadingView.isHidden = true
     }
     
     private func bind() {
@@ -146,7 +143,7 @@ class HomeViewController: UIViewController {
     }
     
     
-    private func applySnapshot(with items: [Article], animatingDifferences: Bool = false) {
+    private func applySnapshot(with items: [Article], animatingDifferences: Bool = true) {
         var snapshot = Snapshot()
         snapshot.appendSections([.main])
         snapshot.appendItems(items)
@@ -157,8 +154,10 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let post = tableViewDataSource.itemIdentifier(for: indexPath) else { return }
-        print("tapped on \(post.title)")
+        guard let article = tableViewDataSource.itemIdentifier(for: indexPath) else { return }
+        let detailViewController = ArticleDetailViewController(article: article)
+        navigationController?.pushViewController(detailViewController, animated: true)
+        
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

@@ -8,6 +8,7 @@
 import Foundation
 
 struct Article: Decodable, Hashable {
+    let uniqueId = UUID()
     let id: Int?
     let title, description: String?
     let path: String?

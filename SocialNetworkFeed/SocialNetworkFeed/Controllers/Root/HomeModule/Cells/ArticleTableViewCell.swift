@@ -11,7 +11,8 @@ import Alamofire
 class ArticleTableViewCell: UITableViewCell {
     
     var onBookmarkTapped: (() -> Void)?
-    
+    var state = false
+    private let imageCache = NSCache<NSString, UIImage>()
     // MARK: - UI Elements
     
     private let avatarImageView: UIImageView = {
@@ -142,13 +143,35 @@ class ArticleTableViewCell: UITableViewCell {
     // MARK: - Actions
     
     @objc private func bookmarkButtonTapped() {
+        state = !state
+        updateBookmarkState(isBookmarked: state, animated: true)
         onBookmarkTapped?()
     }
+    
+    func updateBookmarkState(isBookmarked: Bool, animated: Bool) {
+        bookmarkButton.setImage(isBookmarked ? UIImage(named: "bookmark.filled") : UIImage(named: "bookmark"), for: .normal)
+        
+        if animated {
+            if let bookmarkImageView = bookmarkButton.imageView {
+                bookmarkImageView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+                UIView.animate(withDuration: 0.3,
+                               delay: 0,
+                               usingSpringWithDamping: 0.5,
+                               initialSpringVelocity: 3,
+                               options: .allowUserInteraction,
+                               animations: {
+                    bookmarkImageView.transform = .identity
+                }, completion: nil)
+            }
+        }
+    }
+
     
     // MARK: - Configuration
     
     func configure(with article: Article) {
-        // Load avatar image using Alamofire
+        state = article.isBookmarked
+       
         if let imageUrlString = article.user?.profileImage90,
            let url = URL(string: imageUrlString) {
             AF.request(url).validate().responseData { response in

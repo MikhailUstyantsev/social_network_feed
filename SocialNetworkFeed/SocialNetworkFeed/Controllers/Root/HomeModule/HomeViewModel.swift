@@ -84,7 +84,6 @@ final class HomeViewModel {
         
         if let index = articles.firstIndex(where: { $0.id == article.id }) {
             articles[index].isBookmarked.toggle()
-            articlesPublisher.send(articles)
         }
     }
 }
