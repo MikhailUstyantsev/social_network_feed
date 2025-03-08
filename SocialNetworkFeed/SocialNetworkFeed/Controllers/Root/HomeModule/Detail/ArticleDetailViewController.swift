@@ -11,15 +11,10 @@ class ArticleDetailViewController: UIViewController {
     
     // MARK: - Properties
     private var article: Article
+    private let viewModel: ArticleDetailViewModel
     
-    // Scroll view to support scrolling for long content
     private let scrollView = UIScrollView()
     private let contentView = UIView()
-    
-    // Header/Profile section
-    private let profileImageView = UIImageView()
-    private let usernameLabel = UILabel()
-    private let userInfoLabel = UILabel()
     
     // Article text and main image
     private let articleTextLabel = UILabel()
@@ -30,21 +25,21 @@ class ArticleDetailViewController: UIViewController {
     private let likesCountLabel = UILabel()
     private let sharesCountLabel = UILabel()
     
-    // Comments summary: a button for toggling and a time label
-    private let showCommentsButton: UIButton = {
+    private lazy var showCommentsButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Show 3 comments", for: .normal)
+        let count = article.commentsCount ?? 0
+        button.setTitle("Show \(count) \(count.pluralized(singular: "comment"))", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     private let commentTimeLabel = UILabel()
-    
-    // Wrapper view to contain the comments stack and control its height
+    private lazy var header = ArticleHeaderView(article: article)
+    private lazy var interactionView = ArticleInteractionView(article: article)
     private let commentsContainerWrapper = UIView()
     private var commentsContainerHeightConstraint: NSLayoutConstraint!
     
-    // The vertical stack that holds all CommentView instances
+   
     private let commentsContainerStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -53,16 +48,14 @@ class ArticleDetailViewController: UIViewController {
         return stack
     }()
     
-    // Bottom toolbar with a comment input field
-    private let commentToolbar = UIView()
     private let commentTextField = UITextField()
     
-    // Track whether comments are visible or not.
     private var areCommentsVisible = false
     
     // MARK: - Initializer
-    init(article: Article) {
+    init(article: Article, viewModel: ArticleDetailViewModel) {
         self.article = article
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -80,10 +73,10 @@ class ArticleDetailViewController: UIViewController {
         setupScrollView()
         setupHeaderSection()
         setupArticleSection()
-        setupInteractionSection()
+        setupInteractionView()
         setupCommentsSection()
         configureWithArticle()
-        setupBottomToolbar()
+        setupCommentTextField()
         dismissKeyboardTapGesture()
     }
     
@@ -122,11 +115,10 @@ class ArticleDetailViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self,
-                                                  name: UIResponder.keyboardWillShowNotification,
-                                                  object: nil)
+        name: UIResponder.keyboardWillShowNotification, object: nil)
+        
         NotificationCenter.default.removeObserver(self,
-                                                  name: UIResponder.keyboardWillHideNotification,
-                                                  object: nil)
+        name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     
@@ -145,13 +137,12 @@ class ArticleDetailViewController: UIViewController {
         scrollView.addSubview(contentView)
         
         NSLayoutConstraint.activate([
-            // Pin the scrollView to the view edges, leaving space at the bottom for the toolbar.
+            // Pin the scrollView to the view edges, leaving space at the bottom for the textField.
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -60),
             
-            // Ensure contentView matches scrollView’s width.
             contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
@@ -160,66 +151,29 @@ class ArticleDetailViewController: UIViewController {
         ])
     }
     
-    private func setupBottomToolbar() {
-        commentToolbar.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(commentToolbar)
-        commentToolbar.backgroundColor = UIColor(red: 248/255, green: 250/255, blue: 251/255, alpha: 1)
-        
+    private func setupCommentTextField() {
+        view.addSubview(commentTextField)
         commentTextField.placeholder = "Write a comment..."
+        commentTextField.clearButtonMode = .whileEditing
         commentTextField.borderStyle = .roundedRect
         commentTextField.translatesAutoresizingMaskIntoConstraints = false
-        commentToolbar.addSubview(commentTextField)
         
         NSLayoutConstraint.activate([
-            commentToolbar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            commentToolbar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            commentToolbar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            commentToolbar.heightAnchor.constraint(equalToConstant: 60),
-            
-            commentTextField.leadingAnchor.constraint(equalTo: commentToolbar.leadingAnchor, constant: 16),
-            commentTextField.trailingAnchor.constraint(equalTo: commentToolbar.trailingAnchor, constant: -16),
-            commentTextField.centerYAnchor.constraint(equalTo: commentToolbar.centerYAnchor),
-            commentTextField.heightAnchor.constraint(equalToConstant: 40)
+            commentTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            commentTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            commentTextField.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5),
+            commentTextField.heightAnchor.constraint(equalToConstant: 60),
         ])
     }
     
     private func setupHeaderSection() {
-        let headerStack = UIStackView()
-        headerStack.axis = .horizontal
-        headerStack.spacing = 12
-        headerStack.alignment = .center
-        headerStack.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(headerStack)
-        
-        profileImageView.translatesAutoresizingMaskIntoConstraints = false
-        profileImageView.contentMode = .scaleAspectFill
-        profileImageView.clipsToBounds = true
-        profileImageView.layer.cornerRadius = 20 // 40x40 image
-        headerStack.addArrangedSubview(profileImageView)
-        NSLayoutConstraint.activate([
-            profileImageView.widthAnchor.constraint(equalToConstant: 40),
-            profileImageView.heightAnchor.constraint(equalToConstant: 40)
-        ])
-        
-        let userInfoStack = UIStackView()
-        userInfoStack.axis = .vertical
-        userInfoStack.spacing = 4
-        userInfoStack.translatesAutoresizingMaskIntoConstraints = false
-        
-        usernameLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        usernameLabel.textColor = .black
-        userInfoStack.addArrangedSubview(usernameLabel)
-        
-        userInfoLabel.font = UIFont.systemFont(ofSize: 14)
-        userInfoLabel.textColor = UIColor(red: 79/255, green: 115/255, blue: 150/255, alpha: 1)
-        userInfoStack.addArrangedSubview(userInfoLabel)
-        
-        headerStack.addArrangedSubview(userInfoStack)
+        header.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(header)
         
         NSLayoutConstraint.activate([
-            headerStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            headerStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            headerStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
+            header.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            header.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            header.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ])
     }
     
@@ -231,7 +185,7 @@ class ArticleDetailViewController: UIViewController {
         contentView.addSubview(articleTextLabel)
         
         NSLayoutConstraint.activate([
-            articleTextLabel.topAnchor.constraint(equalTo: profileImageView.superview!.bottomAnchor, constant: 16),
+            articleTextLabel.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 16),
             articleTextLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             articleTextLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ])
@@ -249,47 +203,15 @@ class ArticleDetailViewController: UIViewController {
         ])
     }
     
-    private func setupInteractionSection() {
-        let interactionStack = UIStackView()
-        interactionStack.axis = .horizontal
-        interactionStack.alignment = .center
-        interactionStack.distribution = .equalSpacing
-        interactionStack.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(interactionStack)
-        
-        let commentsStack = createIconStack(systemImageName: "message", countLabel: commentsCountLabel)
-        interactionStack.addArrangedSubview(commentsStack)
-        
-        let likesStack = createIconStack(systemImageName: "heart", countLabel: likesCountLabel)
-        interactionStack.addArrangedSubview(likesStack)
-        
-        let sharesStack = createIconStack(systemImageName: "paperplane", countLabel: sharesCountLabel)
-        interactionStack.addArrangedSubview(sharesStack)
+    private func setupInteractionView() {
+        interactionView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(interactionView)
         
         NSLayoutConstraint.activate([
-            interactionStack.topAnchor.constraint(equalTo: articleImageView.bottomAnchor, constant: 16),
-            interactionStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            interactionStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
+            interactionView.topAnchor.constraint(equalTo: articleImageView.bottomAnchor, constant: 16),
+            interactionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            interactionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ])
-    }
-    
-    private func createIconStack(systemImageName: String, countLabel: UILabel) -> UIStackView {
-        let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.spacing = 4
-        stack.alignment = .center
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        
-        let iconImageView = UIImageView(image: UIImage(systemName: systemImageName))
-        iconImageView.tintColor = UIColor(red: 79/255, green: 115/255, blue: 150/255, alpha: 1)
-        iconImageView.translatesAutoresizingMaskIntoConstraints = false
-        stack.addArrangedSubview(iconImageView)
-        
-        countLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
-        countLabel.textColor = UIColor(red: 79/255, green: 115/255, blue: 150/255, alpha: 1)
-        stack.addArrangedSubview(countLabel)
-        
-        return stack
     }
     
     private func setupCommentsSection() {
@@ -300,15 +222,20 @@ class ArticleDetailViewController: UIViewController {
         commentsSummaryStack.alignment = .center
         commentsSummaryStack.distribution = .equalSpacing
         commentsSummaryStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        if article.commentsCount == 0 {
+            commentsSummaryStack.isHidden = true
+        }
+        
         contentView.addSubview(commentsSummaryStack)
         
         // Configure commentTimeLabel.
-        commentTimeLabel.font = UIFont.systemFont(ofSize: 14)
-        commentTimeLabel.textColor = UIColor(red: 79/255, green: 115/255, blue: 150/255, alpha: 1)
+        commentTimeLabel.font = R.Font.montserratMedium(with: 14)
+        commentTimeLabel.textColor = .secondaryLabel
         commentTimeLabel.text = "5d"
         
         NSLayoutConstraint.activate([
-            commentsSummaryStack.topAnchor.constraint(equalTo: commentsCountLabel.superview!.superview!.bottomAnchor, constant: 16),
+            commentsSummaryStack.topAnchor.constraint(equalTo: interactionView.bottomAnchor, constant: 16),
             commentsSummaryStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             commentsSummaryStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ])
@@ -343,8 +270,8 @@ class ArticleDetailViewController: UIViewController {
         commentsContainerHeightConstraint = commentsContainerWrapper.heightAnchor.constraint(equalToConstant: 0)
         commentsContainerHeightConstraint.isActive = true
         
-        // For demo purposes, create 3 CommentView instances.
-        for _ in 0...2 {
+
+        for _ in 0..<(article.commentsCount ?? 0) {
             let commentView = CommentView(
                 image: UIImage(named: "placeholder"), // Replace with async loading if needed.
                 name: "Jeffrey S.",
@@ -359,15 +286,16 @@ class ArticleDetailViewController: UIViewController {
     
     // MARK: - Actions
     @objc private func toggleCommentsVisibility() {
+        let count = article.commentsCount ?? 0
         if !areCommentsVisible {
-            // Force layout so that the intrinsic content height is updated.
+            
             commentsContainerStack.layoutIfNeeded()
             let targetHeight = commentsContainerStack.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
             commentsContainerHeightConstraint.constant = targetHeight
-            showCommentsButton.setTitle("Hide 3 comments", for: .normal)
+            showCommentsButton.setTitle("Hide \(count) \(count.pluralized(singular: "comment"))", for: .normal)
         } else {
             commentsContainerHeightConstraint.constant = 0
-            showCommentsButton.setTitle("Show 3 comments", for: .normal)
+            showCommentsButton.setTitle("Show \(count) \(count.pluralized(singular: "comment"))", for: .normal)
         }
         areCommentsVisible.toggle()
         
@@ -378,30 +306,15 @@ class ArticleDetailViewController: UIViewController {
     
     // MARK: - Configuration
     private func configureWithArticle() {
-        usernameLabel.text = article.user?.name
-        userInfoLabel.text = article.user?.githubUsername
         articleTextLabel.text = article.description
         commentsCountLabel.text = "\(article.commentsCount ?? 0)"
         likesCountLabel.text = "\(article.positiveReactionsCount ?? 0)"
         sharesCountLabel.text = "\(article.publicReactionsCount ?? 0)"
-        // The button title and time label are set up in setupCommentsSection.
         
-        loadImage(from: article.user?.profileImage90 ?? "", into: profileImageView)
         if let url = URL(string: article.coverImage ?? "") {
             articleImageView.loadImageWithUrl(url)
         } else {
-            articleImageView.image = UIImage(named: "placeholder")
+            articleImageView.image = UIImage(named: "image")
         }
-    }
-    
-    private func loadImage(from urlString: String, into imageView: UIImageView) {
-        guard let url = URL(string: urlString) else { return }
-        URLSession.shared.dataTask(with: url) { data, _, _ in
-            guard let data = data,
-                  let image = UIImage(data: data) else { return }
-            DispatchQueue.main.async {
-                imageView.image = image
-            }
-        }.resume()
     }
 }

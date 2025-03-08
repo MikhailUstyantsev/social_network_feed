@@ -155,7 +155,11 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let article = tableViewDataSource.itemIdentifier(for: indexPath) else { return }
-        let detailViewController = ArticleDetailViewController(article: article)
+        let viewModel = ArticleDetailViewModel()
+        let detailViewController = ArticleDetailViewController(
+            article: article,
+            viewModel: viewModel
+        )
         navigationController?.pushViewController(detailViewController, animated: true)
         
     }

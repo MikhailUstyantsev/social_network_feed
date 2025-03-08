@@ -15,24 +15,49 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h8R-OK-UGt">
-                                <rect key="frame" x="116.33333333333333" y="404" width="160.33333333333337" height="44.333333333333314"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h8R-OK-UGt">
+                                <rect key="frame" x="51.666666666666657" y="351" width="290" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="290" id="9Hm-Oi-rNt"/>
+                                    <constraint firstAttribute="height" constant="150" id="IDy-xg-4Xw"/>
+                                </constraints>
                                 <attributedString key="attributedText">
-                                    <fragment content="DEV">
+                                    <fragment content="Developers">
                                         <attributes>
-                                            <font key="NSFont" size="40" name=".SFNS-Regular"/>
+                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <font key="NSFont" size="40" name="STSongti-TC-Regular"/>
                                             <font key="NSOriginalFont" size="35" name="Symbol"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content=" ">
                                         <attributes>
-                                            <font key="NSFont" size="40" name=".SFNS-Regular"/>
+                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <font key="NSFont" size="40" name="STSongti-TC-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
-                                    <fragment content="feed">
+                                    <fragment content="social">
                                         <attributes>
-                                            <font key="NSFont" size="40" name=".SFNS-Regular"/>
+                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <font key="NSFont" size="40" name="STSongti-TC-Regular"/>
                                             <font key="NSOriginalFont" size="35" name="Symbol"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=" ">
+                                        <attributes>
+                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <font key="NSFont" size="40" name="STSongti-TC-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="network">
+                                        <attributes>
+                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <font key="NSFont" size="40" name="STSongti-TC-Regular"/>
+                                            <font key="NSOriginalFont" size="35" name="Symbol"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
@@ -49,7 +74,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52.671755725190835" y="374.64788732394368"/>
         </scene>
     </scenes>
 </document>
