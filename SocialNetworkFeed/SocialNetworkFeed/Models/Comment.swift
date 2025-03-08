@@ -9,7 +9,7 @@ import Foundation
 
 struct Comment: Decodable {
     let typeOf, idCode: String
-    let createdAt: Date
+    let createdAt: String
     let bodyHTML: String
     let user: User
     let children: [Comment]

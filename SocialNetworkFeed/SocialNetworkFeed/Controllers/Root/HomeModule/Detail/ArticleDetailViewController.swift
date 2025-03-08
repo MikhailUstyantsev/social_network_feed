@@ -6,24 +6,20 @@
 //
 
 import UIKit
+import Combine
 
 class ArticleDetailViewController: UIViewController {
     
     // MARK: - Properties
     private var article: Article
     private let viewModel: ArticleDetailViewModel
-    
+    private var cancellables = Set<AnyCancellable>()
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     
     // Article text and main image
     private let articleTextLabel = UILabel()
     private let articleImageView = ImageLoader()
-    
-    // Interaction icons (comments, likes, shares)
-    private let commentsCountLabel = UILabel()
-    private let likesCountLabel = UILabel()
-    private let sharesCountLabel = UILabel()
     
     private lazy var showCommentsButton: UIButton = {
         let button = UIButton(type: .system)
@@ -39,7 +35,7 @@ class ArticleDetailViewController: UIViewController {
     private let commentsContainerWrapper = UIView()
     private var commentsContainerHeightConstraint: NSLayoutConstraint!
     
-   
+    
     private let commentsContainerStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -78,17 +74,45 @@ class ArticleDetailViewController: UIViewController {
         configureWithArticle()
         setupCommentTextField()
         dismissKeyboardTapGesture()
+        bind()
+        viewModel.getCommentsFor(article: article.id ?? 0)
+    }
+    
+    private func bind() {
+        viewModel.commentsPublisher
+            .sink { completion in
+                switch completion {
+                case .failure(let error):
+                    ErrorPresenter.showError(message: "Failure while loading comments. \(error.localizedDescription)", on: self)
+                case .finished:
+                    break
+                }
+            } receiveValue: { [weak self] comments in
+                guard let self else { return }
+                DispatchQueue.main.async {
+                    for comment in comments {
+                        let commentView = CommentView(
+                            image: comment.user.profileImage90,
+                            name: comment.user.name ?? "Unknown",
+                            time: comment.createdAt,
+                            comment: comment.bodyHTML.htmlToString
+                        )
+                        self.commentsContainerStack.addArrangedSubview(commentView)
+                    }
+                }
+            }
+            .store(in: &cancellables)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self,
-        selector: #selector(keyboardWillShow(notification:)),
-        name: UIResponder.keyboardWillShowNotification, object: nil)
-       
+                                               selector: #selector(keyboardWillShow(notification:)),
+                                               name: UIResponder.keyboardWillShowNotification, object: nil)
+        
         NotificationCenter.default.addObserver(self,
-        selector: #selector(keyboardWillHide(notification:)),
-        name: UIResponder.keyboardWillHideNotification, object: nil)
+                                               selector: #selector(keyboardWillHide(notification:)),
+                                               name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     @objc private func keyboardWillShow(notification: Notification) {
@@ -115,10 +139,10 @@ class ArticleDetailViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self,
-        name: UIResponder.keyboardWillShowNotification, object: nil)
+                                                  name: UIResponder.keyboardWillShowNotification, object: nil)
         
         NotificationCenter.default.removeObserver(self,
-        name: UIResponder.keyboardWillHideNotification, object: nil)
+                                                  name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     
@@ -180,7 +204,7 @@ class ArticleDetailViewController: UIViewController {
     private func setupArticleSection() {
         articleTextLabel.numberOfLines = 0
         articleTextLabel.font = UIFont.systemFont(ofSize: 16)
-        articleTextLabel.textColor = .black
+        articleTextLabel.textColor = .label
         articleTextLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(articleTextLabel)
         
@@ -269,18 +293,6 @@ class ArticleDetailViewController: UIViewController {
         // Add a height constraint on the wrapper that we can animate.
         commentsContainerHeightConstraint = commentsContainerWrapper.heightAnchor.constraint(equalToConstant: 0)
         commentsContainerHeightConstraint.isActive = true
-        
-
-        for _ in 0..<(article.commentsCount ?? 0) {
-            let commentView = CommentView(
-                image: UIImage(named: "placeholder"), // Replace with async loading if needed.
-                name: "Jeffrey S.",
-                time: "2d",
-                comment: "I'm a software engineer at Google. I'm interested in learning how to invest."
-            )
-            commentView.translatesAutoresizingMaskIntoConstraints = false
-            commentsContainerStack.addArrangedSubview(commentView)
-        }
     }
     
     
@@ -307,9 +319,6 @@ class ArticleDetailViewController: UIViewController {
     // MARK: - Configuration
     private func configureWithArticle() {
         articleTextLabel.text = article.description
-        commentsCountLabel.text = "\(article.commentsCount ?? 0)"
-        likesCountLabel.text = "\(article.positiveReactionsCount ?? 0)"
-        sharesCountLabel.text = "\(article.publicReactionsCount ?? 0)"
         
         if let url = URL(string: article.coverImage ?? "") {
             articleImageView.loadImageWithUrl(url)

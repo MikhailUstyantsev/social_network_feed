@@ -24,6 +24,16 @@ extension Endpoint {
             ]
         )
     }
+    
+    
+    static func commentsForArticle(id: Int) -> Endpoint {
+        return Endpoint(
+            path: "/api/comments",
+            queryItems: [
+                URLQueryItem(name: "a_id", value: String(describing: id))
+            ]
+        )
+    }
 }
 
 extension Endpoint {

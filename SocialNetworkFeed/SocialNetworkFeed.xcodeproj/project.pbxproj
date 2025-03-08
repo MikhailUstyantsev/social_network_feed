@@ -56,6 +56,8 @@
 		835720DB2D7C779900F08BAE /* Int + Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835720DA2D7C779900F08BAE /* Int + Ext.swift */; };
 		835720DD2D7C7EA200F08BAE /* ArticleHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835720DC2D7C7EA200F08BAE /* ArticleHeaderView.swift */; };
 		835720DF2D7C88D300F08BAE /* ArticleInteractionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835720DE2D7C88D300F08BAE /* ArticleInteractionView.swift */; };
+		835720E12D7CA60700F08BAE /* Date + Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835720E02D7CA60700F08BAE /* Date + Ext.swift */; };
+		835720E32D7CA82400F08BAE /* String + Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835720E22D7CA82400F08BAE /* String + Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -109,6 +111,8 @@
 		835720DA2D7C779900F08BAE /* Int + Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int + Ext.swift"; sourceTree = "<group>"; };
 		835720DC2D7C7EA200F08BAE /* ArticleHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleHeaderView.swift; sourceTree = "<group>"; };
 		835720DE2D7C88D300F08BAE /* ArticleInteractionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleInteractionView.swift; sourceTree = "<group>"; };
+		835720E02D7CA60700F08BAE /* Date + Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + Ext.swift"; sourceTree = "<group>"; };
+		835720E22D7CA82400F08BAE /* String + Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -343,6 +347,8 @@
 			isa = PBXGroup;
 			children = (
 				835720DA2D7C779900F08BAE /* Int + Ext.swift */,
+				835720E02D7CA60700F08BAE /* Date + Ext.swift */,
+				835720E22D7CA82400F08BAE /* String + Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -451,8 +457,10 @@
 				835720792D78C45E00F08BAE /* HomeViewModel.swift in Sources */,
 				835720652D78B69F00F08BAE /* AppDelegate.swift in Sources */,
 				835720B62D7B692A00F08BAE /* BookmarkedArticle+CoreDataClass.swift in Sources */,
+				835720E12D7CA60700F08BAE /* Date + Ext.swift in Sources */,
 				835720B72D7B692A00F08BAE /* BookmarkedArticle+CoreDataProperties.swift in Sources */,
 				835720B82D7B692A00F08BAE /* BookmarkedUser+CoreDataClass.swift in Sources */,
+				835720E32D7CA82400F08BAE /* String + Ext.swift in Sources */,
 				835720D82D7C5F1C00F08BAE /* Comment.swift in Sources */,
 				835720B92D7B692A00F08BAE /* BookmarkedUser+CoreDataProperties.swift in Sources */,
 				8357207F2D7A216700F08BAE /* ArticleTableViewCell.swift in Sources */,

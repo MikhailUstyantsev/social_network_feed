@@ -26,4 +26,17 @@ final class NetworkManager {
                 completion(.success(response.value ?? []))
         }
     }
+    
+    
+    func retrieveComments(from url: URL, completion: @escaping (Result<[Comment], AFError>) -> (Void)) {
+        AF.request(url, method: .get)
+            .validate()
+            .responseDecodable(of: [Comment].self) { response in
+                if let error = response.error {
+                    completion(.failure(error))
+                    return
+                }
+                completion(.success(response.value ?? []))
+        }
+    }
 }

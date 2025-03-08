@@ -48,12 +48,12 @@ class ArticleHeaderView: UIView {
         
         
         usernameLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        usernameLabel.textColor = .black
+        usernameLabel.textColor = .label
         userInfoStack.addArrangedSubview(usernameLabel)
         
         
         userInfoLabel.font = UIFont.systemFont(ofSize: 14)
-        userInfoLabel.textColor = UIColor(red: 79/255, green: 115/255, blue: 150/255, alpha: 1)
+        userInfoLabel.textColor = .secondaryLabel
         userInfoStack.addArrangedSubview(userInfoLabel)
         
         headerStack.addArrangedSubview(userInfoStack)

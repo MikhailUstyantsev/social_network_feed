@@ -11,8 +11,8 @@ class CommentView: UIView {
     
     // MARK: - Subviews
     
-    private let commenterImageView: UIImageView = {
-        let iv = UIImageView()
+    private let commenterImageView: ImageLoader = {
+        let iv = ImageLoader()
         iv.translatesAutoresizingMaskIntoConstraints = false
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
@@ -23,7 +23,7 @@ class CommentView: UIView {
     private let commenterNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        label.textColor = .black
+        label.textColor = .label
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -39,7 +39,7 @@ class CommentView: UIView {
     private let commentTextLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = UIColor(red: 79/255, green: 115/255, blue: 150/255, alpha: 1)
+        label.textColor = .secondaryLabel
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -53,7 +53,7 @@ class CommentView: UIView {
     ///   - name: The commenter's name.
     ///   - time: The time stamp of the comment.
     ///   - comment: The comment text.
-    init(image: UIImage?, name: String, time: String, comment: String) {
+    init(image: String?, name: String, time: String, comment: String) {
         super.init(frame: .zero)
         setupView()
         configure(image: image, name: name, time: time, comment: comment)
@@ -94,11 +94,20 @@ class CommentView: UIView {
     
     // MARK: - Configuration
     
-    private func configure(image: UIImage?, name: String, time: String, comment: String) {
-        commenterImageView.image = image
+    private func configure(image: String?, name: String, time: String, comment: String) {
         commenterNameLabel.text = name
-        commenterTimeLabel.text = time
+        if let date = Date.fromISO8601(time) {
+            commenterTimeLabel.text = "\(date.formattedDate), \(date.formattedTime)"
+        } else {
+            commenterTimeLabel.text = "Invalid date format"
+        }
+        
         commentTextLabel.text = comment
+        if let url = URL(string: image ?? "") {
+            commenterImageView.loadImageWithUrl(url)
+        } else {
+            commenterImageView.image = UIImage(named: "placeholder")
+        }
     }
 }
 
