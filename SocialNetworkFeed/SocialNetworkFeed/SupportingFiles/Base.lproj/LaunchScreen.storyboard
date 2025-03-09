@@ -15,48 +15,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h8R-OK-UGt">
-                                <rect key="frame" x="51.666666666666657" y="351" width="290" height="150"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="8La-yG-xlS">
+                                <rect key="frame" x="0.0" y="159" width="393" height="400"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="290" id="9Hm-Oi-rNt"/>
-                                    <constraint firstAttribute="height" constant="150" id="IDy-xg-4Xw"/>
+                                    <constraint firstAttribute="height" constant="400" id="hng-Um-qs7"/>
                                 </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6IP-lh-VO6">
+                                <rect key="frame" x="0.0" y="559" width="393" height="102.66666666666663"/>
                                 <attributedString key="attributedText">
-                                    <fragment content="Developers">
+                                    <fragment content="Developers Social Network">
                                         <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" size="40" name="STSongti-TC-Regular"/>
-                                            <font key="NSOriginalFont" size="35" name="Symbol"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=" ">
-                                        <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" size="40" name="STSongti-TC-Regular"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="social">
-                                        <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" size="40" name="STSongti-TC-Regular"/>
-                                            <font key="NSOriginalFont" size="35" name="Symbol"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=" ">
-                                        <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" size="40" name="STSongti-TC-Regular"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="network">
-                                        <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" size="40" name="STSongti-TC-Regular"/>
-                                            <font key="NSOriginalFont" size="35" name="Symbol"/>
+                                            <font key="NSFont" size="44" name="Geneva"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -65,10 +35,15 @@
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" red="0.66497768125456125" green="0.72330274475803147" blue="0.90947291654409823" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="h8R-OK-UGt" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="asH-rO-QmO"/>
-                            <constraint firstItem="h8R-OK-UGt" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="uhh-en-3HI"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="8La-yG-xlS" secondAttribute="trailing" id="9Wz-6Q-26e"/>
+                            <constraint firstItem="8La-yG-xlS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ADu-FE-kx7"/>
+                            <constraint firstItem="6IP-lh-VO6" firstAttribute="top" secondItem="8La-yG-xlS" secondAttribute="bottom" id="G8M-Tb-oWh"/>
+                            <constraint firstItem="8La-yG-xlS" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="J0U-fI-7sS"/>
+                            <constraint firstItem="8La-yG-xlS" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="100" id="aW4-HI-o61"/>
+                            <constraint firstItem="6IP-lh-VO6" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ika-vB-yM1"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6IP-lh-VO6" secondAttribute="trailing" id="oFf-Wd-ZUc"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -77,4 +52,7 @@
             <point key="canvasLocation" x="52.671755725190835" y="374.64788732394368"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="logo.jpg" width="512" height="512"/>
+    </resources>
 </document>

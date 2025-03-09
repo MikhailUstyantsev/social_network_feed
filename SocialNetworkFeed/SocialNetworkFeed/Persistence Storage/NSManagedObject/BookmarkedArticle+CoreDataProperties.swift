@@ -2,7 +2,7 @@
 //  BookmarkedArticle+CoreDataProperties.swift
 //  SocialNetworkFeed
 //
-//  Created by Mikhail Ustyantsev on 07.03.2025.
+//  Created by Mikhail Ustyantsev on 09.03.2025.
 //
 //
 
@@ -22,6 +22,7 @@ extension BookmarkedArticle {
     @NSManaged public var commentsCount: Int32
     @NSManaged public var publicReactionsCount: Int32
     @NSManaged public var positiveReactionsCount: Int32
+    @NSManaged public var coverImage: String?
     @NSManaged public var user: BookmarkedUser?
 
 }

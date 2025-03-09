@@ -17,6 +17,15 @@ class StorageManager {
         return appDelegate.persistentContainer.viewContext
     }
     
+    func retrieveAll() throws -> [BookmarkedArticle] {
+        do {
+            let fetchRequest = NSFetchRequest<BookmarkedArticle>(entityName: "BookmarkedArticle")
+            return try managedObjectContext.fetch(fetchRequest)
+        } catch {
+            throw StorageError.retrieveError
+        }
+    }
+    
     
     func isBookmarked(articleID: Int) -> Bool {
         let fetchRequest: NSFetchRequest<BookmarkedArticle> = BookmarkedArticle.fetchRequest()

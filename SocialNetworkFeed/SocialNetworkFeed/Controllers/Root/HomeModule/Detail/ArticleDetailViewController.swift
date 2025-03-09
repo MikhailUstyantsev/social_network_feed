@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class ArticleDetailViewController: UIViewController {
+final class ArticleDetailViewController: UIViewController {
     
     // MARK: - Properties
     private var article: Article
@@ -30,8 +30,8 @@ class ArticleDetailViewController: UIViewController {
         return button
     }()
     private let commentTimeLabel = UILabel()
-    private lazy var header = ArticleHeaderView(article: article)
-    private lazy var interactionView = ArticleInteractionView(article: article)
+    private let header = ArticleHeaderView()
+    private let interactionView = ArticleInteractionView()
     private let commentsContainerWrapper = UIView()
     private var commentsContainerHeightConstraint: NSLayoutConstraint!
     
@@ -39,13 +39,12 @@ class ArticleDetailViewController: UIViewController {
     private let commentsContainerStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.spacing = 30
+        stack.spacing = 6
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
     
     private let commentTextField = UITextField()
-    
     private var areCommentsVisible = false
     
     // MARK: - Initializer
@@ -78,6 +77,7 @@ class ArticleDetailViewController: UIViewController {
         viewModel.getCommentsFor(article: article.id ?? 0)
     }
     
+    //MARK: - Binding
     private func bind() {
         viewModel.commentsPublisher
             .sink { completion in
@@ -99,6 +99,7 @@ class ArticleDetailViewController: UIViewController {
                         )
                         self.commentsContainerStack.addArrangedSubview(commentView)
                     }
+                    self.showCommentsButton.isEnabled = true
                 }
             }
             .store(in: &cancellables)
@@ -106,13 +107,19 @@ class ArticleDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillShow(notification:)),
-                                               name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow(notification:)),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillHide(notification:)),
-                                               name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide(notification:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
     }
     
     @objc private func keyboardWillShow(notification: Notification) {
@@ -138,13 +145,18 @@ class ArticleDetailViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self,
-                                                  name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
         
-        NotificationCenter.default.removeObserver(self,
-                                                  name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
     }
-    
     
     private func dismissKeyboardTapGesture() {
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing(_:)))
@@ -161,7 +173,6 @@ class ArticleDetailViewController: UIViewController {
         scrollView.addSubview(contentView)
         
         NSLayoutConstraint.activate([
-            // Pin the scrollView to the view edges, leaving space at the bottom for the textField.
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -180,6 +191,7 @@ class ArticleDetailViewController: UIViewController {
         commentTextField.placeholder = "Write a comment..."
         commentTextField.clearButtonMode = .whileEditing
         commentTextField.borderStyle = .roundedRect
+        commentTextField.backgroundColor = .tertiarySystemBackground
         commentTextField.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -239,8 +251,8 @@ class ArticleDetailViewController: UIViewController {
     }
     
     private func setupCommentsSection() {
+        showCommentsButton.isEnabled = false
         commentsContainerWrapper.clipsToBounds = true
-        // Create a horizontal stack containing the toggle button and time label.
         let commentsSummaryStack = UIStackView(arrangedSubviews: [showCommentsButton, commentTimeLabel])
         commentsSummaryStack.axis = .horizontal
         commentsSummaryStack.alignment = .center
@@ -253,7 +265,6 @@ class ArticleDetailViewController: UIViewController {
         
         contentView.addSubview(commentsSummaryStack)
         
-        // Configure commentTimeLabel.
         commentTimeLabel.font = R.Font.montserratMedium(with: 14)
         commentTimeLabel.textColor = .secondaryLabel
         commentTimeLabel.text = "5d"
@@ -264,7 +275,6 @@ class ArticleDetailViewController: UIViewController {
             commentsSummaryStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ])
         
-        // Add target action to toggle comments visibility.
         showCommentsButton.addTarget(self, action: #selector(toggleCommentsVisibility), for: .touchUpInside)
         
         // Create a wrapper view to hold the comments container.
@@ -277,8 +287,7 @@ class ArticleDetailViewController: UIViewController {
         NSLayoutConstraint.activate([
             commentsContainerStack.topAnchor.constraint(equalTo: commentsContainerWrapper.topAnchor),
             commentsContainerStack.leadingAnchor.constraint(equalTo: commentsContainerWrapper.leadingAnchor),
-            commentsContainerStack.trailingAnchor.constraint(equalTo: commentsContainerWrapper.trailingAnchor),
-            commentsContainerStack.bottomAnchor.constraint(equalTo: commentsContainerWrapper.bottomAnchor)
+            commentsContainerStack.trailingAnchor.constraint(equalTo: commentsContainerWrapper.trailingAnchor)
         ])
         
         // Constrain the wrapper view relative to the content view.
@@ -290,7 +299,7 @@ class ArticleDetailViewController: UIViewController {
             commentsContainerWrapper.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
         
-        // Add a height constraint on the wrapper that we can animate.
+        // Add a height constraint on the wrapper
         commentsContainerHeightConstraint = commentsContainerWrapper.heightAnchor.constraint(equalToConstant: 0)
         commentsContainerHeightConstraint.isActive = true
     }
@@ -319,7 +328,8 @@ class ArticleDetailViewController: UIViewController {
     // MARK: - Configuration
     private func configureWithArticle() {
         articleTextLabel.text = article.description
-        
+        header.configure(with: article)
+        interactionView.setupInteractionSection(with: article)
         if let url = URL(string: article.coverImage ?? "") {
             articleImageView.loadImageWithUrl(url)
         } else {

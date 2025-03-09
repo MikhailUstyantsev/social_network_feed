@@ -18,15 +18,16 @@ class TabViewController: UITabBarController {
         view.backgroundColor = .secondarySystemBackground
         
         let storageManager = StorageManager()
-        let viewModel = HomeViewModel(storageManager: storageManager)
-        let homeVC = UINavigationController(rootViewController: HomeViewController(viewModel: viewModel))
+        let homeViewModel = HomeViewModel(storageManager: storageManager)
+        let homeVC = UINavigationController(rootViewController: HomeViewController(viewModel: homeViewModel))
         
-        let bookmarkedVC = UINavigationController(rootViewController: BookmarkedViewController())
+        let bookmarkedViewModel = BookmarkedViewModel(storageManager: storageManager)
+        let bookmarkedVC = UINavigationController(rootViewController: BookmarkedViewController(viewModel: bookmarkedViewModel))
         
         
         
         homeVC.tabBarItem = UITabBarItem(title: "Home",
-                                       image: UIImage(systemName: "list.dash.header.rectangle"),
+                                       image: UIImage(named: "feed"),
                                        tag: 1)
        
         bookmarkedVC.tabBarItem = UITabBarItem(title: "Bookmarked",

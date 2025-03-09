@@ -13,10 +13,9 @@ class ArticleHeaderView: UIView {
     private let usernameLabel = UILabel()
     private let userInfoLabel = UILabel()
     
-    init(article: Article) {
+    init() {
         super.init(frame: .zero)
         setupHeaderSection()
-        configure(with: article)
     }
     
     required init?(coder: NSCoder) {
@@ -67,8 +66,8 @@ class ArticleHeaderView: UIView {
         ])
     }
     
-    
-    private func configure(with article: Article) {
+    //MARK: - Public methods
+    func configure(with article: Article) {
         if let url = URL(string: article.user?.profileImage90 ?? "") {
             profileImageView.loadImageWithUrl(url)
         } else {

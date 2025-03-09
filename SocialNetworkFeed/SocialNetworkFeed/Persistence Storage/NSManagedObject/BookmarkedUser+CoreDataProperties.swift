@@ -2,7 +2,7 @@
 //  BookmarkedUser+CoreDataProperties.swift
 //  SocialNetworkFeed
 //
-//  Created by Mikhail Ustyantsev on 07.03.2025.
+//  Created by Mikhail Ustyantsev on 09.03.2025.
 //
 //
 

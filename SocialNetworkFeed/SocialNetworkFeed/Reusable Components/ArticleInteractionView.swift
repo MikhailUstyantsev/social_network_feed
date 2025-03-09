@@ -13,17 +13,37 @@ class ArticleInteractionView: UIView {
     private let likesCountLabel = UILabel()
     private let sharesCountLabel = UILabel()
     
-    init(article: Article) {
+    init() {
         super.init(frame: .zero)
-        setupInteractionSection(with: article)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-
-    private func setupInteractionSection(with article: Article) {
+    private func createIconStack(systemImageName: String, countLabel: UILabel, count: Int) -> UIStackView {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.spacing = 4
+        stack.alignment = .center
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        
+        let iconImageView = UIImageView(image: UIImage(systemName: systemImageName))
+        iconImageView.tintColor = .secondaryLabel
+        iconImageView.translatesAutoresizingMaskIntoConstraints = false
+        stack.addArrangedSubview(iconImageView)
+        
+        // Configure the count label.
+        countLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+        countLabel.textColor = .secondaryLabel
+        countLabel.text = "\(count)"
+        stack.addArrangedSubview(countLabel)
+        
+        return stack
+    }
+    
+    //MARK: - Public methods
+    func setupInteractionSection(with article: Article) {
         let interactionStack = UIStackView()
         interactionStack.axis = .horizontal
         interactionStack.alignment = .center
@@ -47,26 +67,5 @@ class ArticleInteractionView: UIView {
             interactionStack.trailingAnchor.constraint(equalTo: trailingAnchor),
             interactionStack.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
-    }
-    
-    private func createIconStack(systemImageName: String, countLabel: UILabel, count: Int) -> UIStackView {
-        let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.spacing = 4
-        stack.alignment = .center
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        
-        let iconImageView = UIImageView(image: UIImage(systemName: systemImageName))
-        iconImageView.tintColor = .secondaryLabel
-        iconImageView.translatesAutoresizingMaskIntoConstraints = false
-        stack.addArrangedSubview(iconImageView)
-        
-        // Configure the count label.
-        countLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
-        countLabel.textColor = .secondaryLabel
-        countLabel.text = "\(count)"
-        stack.addArrangedSubview(countLabel)
-        
-        return stack
     }
 }

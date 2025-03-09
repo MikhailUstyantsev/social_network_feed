@@ -62,6 +62,7 @@ class HomeViewController: UIViewController {
         loadingView.isHidden = true
     }
     
+    //MARK: - Binding
     private func bind() {
         viewModel.articlesPublisher
             .sink { completion in
@@ -143,7 +144,7 @@ class HomeViewController: UIViewController {
     }
     
     
-    private func applySnapshot(with items: [Article], animatingDifferences: Bool = true) {
+    private func applySnapshot(with items: [Article], animatingDifferences: Bool = false) {
         var snapshot = Snapshot()
         snapshot.appendSections([.main])
         snapshot.appendItems(items)
@@ -161,7 +162,6 @@ extension HomeViewController: UITableViewDelegate {
             viewModel: viewModel
         )
         navigationController?.pushViewController(detailViewController, animated: true)
-        
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
