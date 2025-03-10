@@ -63,10 +63,10 @@ class BookmarkedViewController: UIViewController {
                 case .finished:
                     break
                 }
-            } receiveValue: { [weak self] articles in
+            } receiveValue: { [weak self] bookmarkedArticles in
                 guard let self else { return }
                 DispatchQueue.main.async {
-                    self.applySnapshot(with: articles)
+                    self.applySnapshot(with: bookmarkedArticles)
                 }
             }
             .store(in: &cancellables)

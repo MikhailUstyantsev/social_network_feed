@@ -64,6 +64,7 @@
 		835720FF2D7E179A00F08BAE /* BookmarkedUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835720FB2D7E179A00F08BAE /* BookmarkedUser+CoreDataProperties.swift */; };
 		835721012D7E1CEB00F08BAE /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835721002D7E1CEB00F08BAE /* Functions.swift */; };
 		835721032D7EC10E00F08BAE /* Notification.Name + Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835721022D7EC10E00F08BAE /* Notification.Name + Ext.swift */; };
+		835721072D7F00C100F08BAE /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835721062D7F00C100F08BAE /* EmptyStateView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -125,6 +126,7 @@
 		835720FB2D7E179A00F08BAE /* BookmarkedUser+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookmarkedUser+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		835721002D7E1CEB00F08BAE /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		835721022D7EC10E00F08BAE /* Notification.Name + Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name + Ext.swift"; sourceTree = "<group>"; };
+		835721062D7F00C100F08BAE /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -352,6 +354,7 @@
 		835720CC2D7C4E6600F08BAE /* Reusable Components */ = {
 			isa = PBXGroup;
 			children = (
+				835721062D7F00C100F08BAE /* EmptyStateView.swift */,
 				835720D32D7C595D00F08BAE /* ImageLoader.swift */,
 				835720CD2D7C4E8E00F08BAE /* CommentView.swift */,
 				835720DC2D7C7EA200F08BAE /* ArticleHeaderView.swift */,
@@ -491,6 +494,7 @@
 				835720FE2D7E179A00F08BAE /* BookmarkedUser+CoreDataClass.swift in Sources */,
 				835720FF2D7E179A00F08BAE /* BookmarkedUser+CoreDataProperties.swift in Sources */,
 				835720D82D7C5F1C00F08BAE /* Comment.swift in Sources */,
+				835721072D7F00C100F08BAE /* EmptyStateView.swift in Sources */,
 				8357207F2D7A216700F08BAE /* ArticleTableViewCell.swift in Sources */,
 				835720AC2D7A397900F08BAE /* Resouces.swift in Sources */,
 				835720732D78BD3E00F08BAE /* NetworkManager.swift in Sources */,
