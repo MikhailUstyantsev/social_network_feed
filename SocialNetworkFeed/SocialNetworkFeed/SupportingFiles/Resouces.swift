@@ -10,7 +10,7 @@ import UIKit
 enum R {
     
     enum String {
-        static let homeVCtitle = "DEV feed"
+        static let homeVCtitle = "Feed"
     }
     
     enum Font {

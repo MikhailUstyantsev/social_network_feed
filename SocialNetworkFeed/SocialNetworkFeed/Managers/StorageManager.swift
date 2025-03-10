@@ -59,6 +59,7 @@ class StorageManager {
         bookmarkedArticle.positiveReactionsCount = Int32(article.positiveReactionsCount ?? 0)
         bookmarkedArticle.publicReactionsCount = Int32(article.publicReactionsCount ?? 0)
         bookmarkedArticle.user = bookmarkedUser
+        bookmarkedArticle.coverImage = article.coverImage
         
         saveContext()
     }

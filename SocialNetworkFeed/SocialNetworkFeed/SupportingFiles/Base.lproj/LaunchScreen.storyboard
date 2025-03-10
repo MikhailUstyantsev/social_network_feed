@@ -4,6 +4,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -21,16 +22,10 @@
                                     <constraint firstAttribute="height" constant="400" id="hng-Um-qs7"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6IP-lh-VO6">
-                                <rect key="frame" x="0.0" y="559" width="393" height="102.66666666666663"/>
-                                <attributedString key="attributedText">
-                                    <fragment content="Developers Social Network">
-                                        <attributes>
-                                            <font key="NSFont" size="44" name="Geneva"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dev Net" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ged-9G-nzm">
+                                <rect key="frame" x="20" y="559" width="353" height="62.333333333333371"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="52"/>
+                                <color key="textColor" systemColor="systemBlueColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -39,11 +34,11 @@
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="8La-yG-xlS" secondAttribute="trailing" id="9Wz-6Q-26e"/>
                             <constraint firstItem="8La-yG-xlS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ADu-FE-kx7"/>
-                            <constraint firstItem="6IP-lh-VO6" firstAttribute="top" secondItem="8La-yG-xlS" secondAttribute="bottom" id="G8M-Tb-oWh"/>
+                            <constraint firstItem="ged-9G-nzm" firstAttribute="top" secondItem="8La-yG-xlS" secondAttribute="bottom" id="An6-xY-mG6"/>
                             <constraint firstItem="8La-yG-xlS" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="J0U-fI-7sS"/>
+                            <constraint firstItem="ged-9G-nzm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="M5s-20-ZFp"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ged-9G-nzm" secondAttribute="trailing" constant="20" id="O6k-Id-i3f"/>
                             <constraint firstItem="8La-yG-xlS" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="100" id="aW4-HI-o61"/>
-                            <constraint firstItem="6IP-lh-VO6" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ika-vB-yM1"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6IP-lh-VO6" secondAttribute="trailing" id="oFf-Wd-ZUc"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -54,5 +49,8 @@
     </scenes>
     <resources>
         <image name="logo.jpg" width="512" height="512"/>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

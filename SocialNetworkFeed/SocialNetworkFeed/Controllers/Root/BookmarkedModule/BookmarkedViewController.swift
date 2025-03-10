@@ -110,6 +110,7 @@ class BookmarkedViewController: UIViewController {
                         guard let self else { return }
                         self.viewModel.storageManager.removeBookmark(articleID: Int(item.id))
                         self.viewModel.getBookmarkedArticles()
+                        NotificationCenter.default.post(name: .bookmarkUpdated, object: nil)
                     }
                     alert.addAction(cancelAction)
                     alert.addAction(deleteAction)

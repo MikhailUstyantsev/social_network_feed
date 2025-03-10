@@ -40,6 +40,12 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         configureViewController()
         viewModel.getArticles(page: 1)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleBookmarkUpdate(notification:)),
+            name: .bookmarkUpdated,
+            object: nil
+        )
     }
     
     private func configureViewController() {
@@ -144,11 +150,16 @@ class HomeViewController: UIViewController {
     }
     
     
-    private func applySnapshot(with items: [Article], animatingDifferences: Bool = false) {
+    private func applySnapshot(with items: [Article], animatingDifferences: Bool = true) {
         var snapshot = Snapshot()
         snapshot.appendSections([.main])
         snapshot.appendItems(items)
         tableViewDataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+    }
+    
+    //MARK: - Notification handler
+    @objc func handleBookmarkUpdate(notification: Notification) {
+        viewModel.getArticles(page: 1)
     }
 }
 

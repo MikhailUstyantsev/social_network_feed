@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+extension Notification.Name {
+    static let bookmarkUpdated = Notification.Name("bookmarkUpdated")
+}

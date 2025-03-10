@@ -63,6 +63,7 @@
 		835720FE2D7E179A00F08BAE /* BookmarkedUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835720FA2D7E179A00F08BAE /* BookmarkedUser+CoreDataClass.swift */; };
 		835720FF2D7E179A00F08BAE /* BookmarkedUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835720FB2D7E179A00F08BAE /* BookmarkedUser+CoreDataProperties.swift */; };
 		835721012D7E1CEB00F08BAE /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835721002D7E1CEB00F08BAE /* Functions.swift */; };
+		835721032D7EC10E00F08BAE /* Notification.Name + Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835721022D7EC10E00F08BAE /* Notification.Name + Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -123,6 +124,7 @@
 		835720FA2D7E179A00F08BAE /* BookmarkedUser+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookmarkedUser+CoreDataClass.swift"; sourceTree = "<group>"; };
 		835720FB2D7E179A00F08BAE /* BookmarkedUser+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookmarkedUser+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		835721002D7E1CEB00F08BAE /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
+		835721022D7EC10E00F08BAE /* Notification.Name + Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name + Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -364,6 +366,7 @@
 				835720DA2D7C779900F08BAE /* Int + Ext.swift */,
 				835720E02D7CA60700F08BAE /* Date + Ext.swift */,
 				835720E22D7CA82400F08BAE /* String + Ext.swift */,
+				835721022D7EC10E00F08BAE /* Notification.Name + Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -495,6 +498,7 @@
 				835720C12D7B7B5F00F08BAE /* BookmarkedViewController.swift in Sources */,
 				835720D42D7C595D00F08BAE /* ImageLoader.swift in Sources */,
 				835720AF2D7B639B00F08BAE /* NetworkFeedModel.xcdatamodeld in Sources */,
+				835721032D7EC10E00F08BAE /* Notification.Name + Ext.swift in Sources */,
 				835720662D78B69F00F08BAE /* SceneDelegate.swift in Sources */,
 				835720F72D7E11BE00F08BAE /* StorageError.swift in Sources */,
 				835720CB2D7C21BB00F08BAE /* ArticleDetailViewController.swift in Sources */,
